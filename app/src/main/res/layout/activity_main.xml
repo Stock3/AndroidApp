@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".Pages.MainActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="238dp"
+            app:srcCompat="@drawable/life_in_eco_style" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoText="false"
+            android:fontFamily="monospace"
+            android:text="Авторизація"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@android:color/darker_gray"
+            android:textIsSelectable="false"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40sp"
+            android:layout_marginTop="20sp"
+            android:layout_marginRight="40sp"
+            android:background="@drawable/fields"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="15sp"
+            android:textColor="@color/colorAccent" />
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40sp"
+            android:layout_marginTop="20sp"
+            android:layout_marginRight="40sp"
+            android:layout_marginBottom="20sp"
+            android:background="@drawable/fields"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="15sp"
+            android:textColor="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="120sp"
+            android:layout_marginRight="120sp"
+            android:background="@drawable/button"
+            android:fontFamily="monospace"
+            android:text="Увійти"
+            android:textColor="@android:color/white"
+            android:textSize="26sp" />
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
