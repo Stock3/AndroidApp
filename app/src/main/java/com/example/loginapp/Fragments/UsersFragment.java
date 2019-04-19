@@ -30,7 +30,6 @@ public class UsersFragment extends Fragment {
     private UserAdapter userAdapter;
     private List<User> mUsers;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,13 +42,12 @@ public class UsersFragment extends Fragment {
         mUsers = new ArrayList<>();
 
         readUsers();
-
         return view;
     }
 
-    private void readUsers(){
+    private void readUsers() {
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Користувачі");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override

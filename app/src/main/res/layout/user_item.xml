@@ -9,7 +9,7 @@
         android:id="@+id/profileImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/username"

@@ -21,7 +21,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Pages.MainActivity">
             <intent-filter>
                 <action android:name=".AdminPage" />
@@ -64,12 +63,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-
-
-
-
-
         <activity android:name=".Chat.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -77,24 +70,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Chat.LoginActivity">
             <intent-filter>
                 <action android:name=".LoginActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
-
-        <activity android:name=".Chat.RegisterActivity" >
+        <activity android:name=".Chat.RegisterActivity">
             <intent-filter>
                 <action android:name=".RegisterActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Chat.ChatPage">
             <intent-filter>
                 <action android:name=".ChatPage" />
@@ -102,7 +91,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".Chat.MessageActivity">
+            <intent-filter>
+                <action android:name=".MessageActivity" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

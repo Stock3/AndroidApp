@@ -1,6 +1,7 @@
 package com.example.loginapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.loginapp.Chat.MessageActivity;
 import com.example.loginapp.Model_for_chat.User;
 import com.example.loginapp.R;
 
@@ -21,8 +23,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private List<User> mUsers;
 
     public UserAdapter(Context mContext, List<User> mUsers){
-        this.mContext = mContext;
         this.mUsers = mUsers;
+        this.mContext = mContext;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -47,20 +49,26 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        User user = mUsers.get(position);
+        final User user = mUsers.get(position);
         holder.username.setText(user.getUsername());
         if (user.getImageURL().equals("default")){
             holder.profileImage.setImageResource(R.mipmap.ic_launcher);
         } else {
             Glide.with(mContext).load(user.getImageURL()).into(holder.profileImage);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (mContext, MessageActivity.class);
+                intent.putExtra("userId", user.getId());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mUsers.size();
     }
-
-
-
 }
