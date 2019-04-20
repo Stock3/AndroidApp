@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.loginapp.Fragments.ChatsFragment;
+import com.example.loginapp.Fragments.ProfileFragment;
 import com.example.loginapp.Fragments.UsersFragment;
 import com.example.loginapp.Model_for_chat.User;
 import com.example.loginapp.R;
@@ -80,6 +81,7 @@ public class ChatPage extends AppCompatActivity {
 
         viewPagerAdapter.addFragment(new ChatsFragment(), "Чати");
         viewPagerAdapter.addFragment(new UsersFragment(), "Контакти");
+        viewPagerAdapter.addFragment(new ProfileFragment(), "Профіль");
 
         viewPager.setAdapter(viewPagerAdapter);
 
