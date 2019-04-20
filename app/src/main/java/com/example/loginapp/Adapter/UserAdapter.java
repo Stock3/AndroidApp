@@ -21,22 +21,28 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     private Context mContext;
     private List<User> mUsers;
+    private boolean isChat;
 
-    public UserAdapter(Context mContext, List<User> mUsers){
+    public UserAdapter(Context mContext, List<User> mUsers, boolean isChat){
         this.mUsers = mUsers;
         this.mContext = mContext;
+        this.isChat = isChat;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView username;
         public ImageView profileImage;
+        private ImageView imgOn;
+        private ImageView imgOff;
 
         public ViewHolder(View itemView){
             super(itemView);
 
             username = itemView.findViewById(R.id.username);
             profileImage = itemView.findViewById(R.id.profileImage);
+            imgOn = itemView.findViewById(R.id.imgOn);
+            imgOff = itemView.findViewById(R.id.imgOff);
         }
     }
 
@@ -55,6 +61,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             holder.profileImage.setImageResource(R.mipmap.ic_launcher);
         } else {
             Glide.with(mContext).load(user.getImageURL()).into(holder.profileImage);
+        }
+
+        if (isChat){
+            if (user.getStatus().equals("online")){
+                holder.imgOn.setVisibility(View.VISIBLE);
+                holder.imgOff.setVisibility(View.GONE);
+            } else {
+                holder.imgOn.setVisibility(View.GONE);
+                holder.imgOff.setVisibility(View.VISIBLE);
+            }
+        } else {
+            holder.imgOn.setVisibility(View.GONE);
+            holder.imgOff.setVisibility(View.GONE);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
