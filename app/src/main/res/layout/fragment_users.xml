@@ -6,7 +6,15 @@
     android:background="#808080"
     tools:context=".Fragments.UsersFragment">
 
+    <EditText
+        android:id="@+id/searchUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="Пошук..."/>
+
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/searchUsers"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
