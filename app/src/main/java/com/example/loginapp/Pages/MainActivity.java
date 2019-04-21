@@ -9,54 +9,92 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.loginapp.App;
+import com.example.loginapp.Model.AuthenticationTokenDto;
+import com.example.loginapp.Model.MessageResponseDto;
+import com.example.loginapp.Model.UserAuthorizationDto;
+import com.example.loginapp.Pages.Admin.RegistrationPage;
 import com.example.loginapp.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
     private ImageView img;
     private Button btn;
-    private EditText email, pass;
+    private EditText EmailEditText, PassEditText;
 
-    private static final String email_txt_a = "admin@gmail.com";
+   /* private static final String email_txt_a = "admin@gmail.com";
     private static final String pass_txt_a = "admin";
 
     private static final String email_txt_u = "user@gmail.com";
-    private static final String pass_txt_u = "user";
+    private static final String pass_txt_u = "user";*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        login ();
-    }
 
-    public void login (){
-        btn = (Button) findViewById(R.id.button);
-        email = (EditText) findViewById(R.id.editText);
-        pass = (EditText) findViewById(R.id.editText2);
+        btn = findViewById(R.id.button);
+        EmailEditText = findViewById(R.id.edtEmail);
+        PassEditText = findViewById(R.id.edtPass);
 
         btn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(email_txt_a.equals(String.valueOf(email.getText())) &&  pass_txt_a.equals(String.valueOf(pass.getText()))){
-                            Intent intent = new Intent(".AdminPage");
-                            startActivity(intent);
-                        }
-                        else if(email_txt_u.equals(String.valueOf(email.getText())) &&  pass_txt_u.equals(String.valueOf(pass.getText()))){
-                            Intent intent = new Intent(".UserPage");
-                            startActivity(intent);
-                        }
-                        else
-                            Toast.makeText(
-                                    MainActivity.this, "Не вірно введений логін або пароль",
-                                    Toast.LENGTH_LONG
-                            ).show();
-                            email.setText("");
-                            pass.setText("");
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    /*if(email_txt_a.equals(String.valueOf(email.getText())) &&  pass_txt_a.equals(String.valueOf(pass.getText()))){
+                        Intent intent = new Intent(".AdminPage");
+                        startActivity(intent);
+                    }
+                    else if(email_txt_u.equals(String.valueOf(email.getText())) &&  pass_txt_u.equals(String.valueOf(pass.getText()))){
+                        Intent intent = new Intent(".UserPage");
+                        startActivity(intent);
+                    }
+                    else
+                        Toast.makeText(
+                                MainActivity.this, "Не вірно введений логін або пароль",
+                                Toast.LENGTH_LONG
+                        ).show();
+                        email.setText("");
+                        pass.setText("");*/
+
+                    String email = EmailEditText.getText().toString();
+                    String pass = PassEditText.getText().toString();
+                    if (email.isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Заповніть будь ласка ім'я", Toast.LENGTH_LONG).show();
+                    }
+                    else if (pass.isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Будь ласка введіть пароль", Toast.LENGTH_LONG).show();
+                    } else {
+                        UserAuthorizationDto loginDto = new UserAuthorizationDto();
+                        loginDto.setEmail(email);
+                        loginDto.setPassword(pass);
+
+                        App.getUserAPI().loginUser(loginDto).enqueue(new Callback<AuthenticationTokenDto>() {
+                            @Override
+                            public void onResponse(Call<AuthenticationTokenDto> call, Response<AuthenticationTokenDto> response) {
+                                AuthenticationTokenDto mesResponse = response.body();
+                                if (mesResponse != null){
+                                    Toast.makeText(MainActivity.this, "Ви успішно авторизовані", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(".UserPage");
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(MainActivity.this, "onResponce, but body is null", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<AuthenticationTokenDto> call, Throwable t) {
+                                Toast.makeText(MainActivity.this, "Щось пішло не так", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 }
+            }
         );
-
     }
+
 }

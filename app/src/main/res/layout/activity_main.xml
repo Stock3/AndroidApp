@@ -34,7 +34,7 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40sp"
@@ -48,7 +48,7 @@
             android:textColor="@color/colorAccent" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/edtPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40sp"
