@@ -1,4 +1,4 @@
-package com.example.loginapp;
+package com.loginapp.loginapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
