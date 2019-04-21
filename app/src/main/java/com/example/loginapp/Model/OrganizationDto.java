@@ -5,6 +5,9 @@ public class OrganizationDto {
     private Long id;
     private String name;
 
+    public OrganizationDto() {
+    }
+
     public Long getId() {
         return id;
     }

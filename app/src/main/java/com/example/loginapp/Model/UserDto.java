@@ -1,12 +1,17 @@
 package com.example.loginapp.Model;
 
-public class UserDto {private Long id;
+public class UserDto {
+
+    private Long id;
     private String name;
     private String surname;
     private String email;
     private boolean isActive;
     private RoleDto role;
     private OrganizationDto organization;
+
+    public UserDto() {
+    }
 
     public Long getId() {
         return id;

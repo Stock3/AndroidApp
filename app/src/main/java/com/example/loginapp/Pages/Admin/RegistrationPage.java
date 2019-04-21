@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.loginapp.App;
+import com.example.loginapp.Model.MessageResponseDto;
 import com.example.loginapp.Model.OrganizationDto;
 import com.example.loginapp.Model.RegistrationFormDto;
 import com.example.loginapp.Model.RoleDto;
@@ -147,18 +148,23 @@ public class RegistrationPage extends AppCompatActivity {
                         userRegistrationDto.setOrganizationId(selectedOrg.getId());
                         userRegistrationDto.setRoleId(selectedRole.getId());
 
-                        /*App.getRegistrationAPI().registrationUser(userRegistrationDto).enqueue(new Callback<Response<ResponseEntity<Object>>>() {
+                        App.getRegistrationAPI().registerUser(userRegistrationDto).enqueue(new Callback<MessageResponseDto>() {
                             @Override
-                            public void onResponse(Call<Response<ResponseEntity<Object>>> call, Response<Response<ResponseEntity<Object>>> response) {
-                                Toast.makeText(getApplicationContext(), "Ви успішно зареєструвались.Активуйте ваш акаунт через електронну пошту.", Toast.LENGTH_LONG).show();
+                            public void onResponse(Call<MessageResponseDto> call, Response<MessageResponseDto> response) {
+                                MessageResponseDto mesResponse = response.body();
+                                if (mesResponse != null){
+                                    Toast.makeText(RegistrationPage.this, mesResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                                    finish();
+                                } else {
+                                    Toast.makeText(RegistrationPage.this, "onResponce, but body is null", Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override
-                            public void onFailure(Call<Response<ResponseEntity<Object>>> call, Throwable t) {
-                                Toast.makeText(getApplicationContext(), "Ви успішно зареєструвались.Активуйте ваш акаунт через електронну пошту.", Toast.LENGTH_LONG).show();
-                                finish();
+                            public void onFailure(Call<MessageResponseDto> call, Throwable t) {
+                                Toast.makeText(RegistrationPage.this, "Щось пішло не так", Toast.LENGTH_SHORT).show();
                             }
-                        });*/
+                        });
                     }
                 }
             }

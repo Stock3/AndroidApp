@@ -5,6 +5,9 @@ public class RoleDto {
     private Long id;
     private String name;
 
+    public RoleDto() {
+    }
+
     public Long getId() {
         return id;
     }

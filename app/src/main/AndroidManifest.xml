@@ -18,9 +18,9 @@
 
         <activity android:name=".Pages.Admin.AdminPage">
             <intent-filter>
-                <action android:name=".AdminPage" />
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".Pages.MainActivity">
@@ -67,9 +67,9 @@
         </activity>
         <activity android:name=".Chat.StartActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name=".StartActivity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".Chat.LoginActivity">

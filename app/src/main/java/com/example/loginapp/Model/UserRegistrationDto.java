@@ -2,6 +2,8 @@ package com.example.loginapp.Model;
 
 public class UserRegistrationDto {
 
+
+
     private String name;
 
     private String surname;
@@ -11,6 +13,9 @@ public class UserRegistrationDto {
     private Long roleId;
 
     private Long organizationId;
+
+    public UserRegistrationDto() {
+    }
 
     public String getName() {
         return name;

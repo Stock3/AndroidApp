@@ -17,7 +17,7 @@ public class App {
 
     static {
         retrofit = new Retrofit.Builder()//
-                .baseUrl("http://192.168.3.105:8081") //Базова частина адреси
+                .baseUrl("http://192.168.0.101:8081") //Базова частина адреси
                 .addConverterFactory(JacksonConverterFactory.create()) //Конвертер, необхідний для перетворення JSON'а в объекты
                 .build();
         registrationAPI = retrofit.create(RegistrationAPI.class);
