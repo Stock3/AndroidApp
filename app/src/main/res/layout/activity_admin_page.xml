@@ -68,6 +68,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+        <Button
+            android:id="@+id/chat_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+            android:layout_marginTop="36dp"
+            android:layout_marginRight="20sp"
+            android:background="@drawable/button"
+            android:fontFamily="monospace"
+            android:text="Eco-чат"
+            android:textColor="@android:color/white"
+            android:textSize="26sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

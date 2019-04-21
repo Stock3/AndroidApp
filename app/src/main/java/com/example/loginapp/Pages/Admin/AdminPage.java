@@ -13,6 +13,7 @@ public class AdminPage extends AppCompatActivity {
     private Button reg_btn;
     private Button category_btn;
     private Button product_btn;
+    private Button chat_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,18 @@ public class AdminPage extends AppCompatActivity {
         registration();
         category();
         product();
+        chat();
+    }
+
+    private void chat() {
+        chat_btn = (Button) findViewById(R.id.chat_btn);
+        chat_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(".ChatPage");
+                startActivity(intent);
+            }
+        });
     }
 
     public void registration(){

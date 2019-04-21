@@ -26,9 +26,10 @@ public class MainActivity extends AppCompatActivity {
     private Button btn;
     private EditText EmailEditText, PassEditText;
 
-   /* private static final String email_txt_a = "admin@gmail.com";
-    private static final String pass_txt_a = "admin";
+    private static final String emailAdmin = "admin@gmail.com";
+    private static final String passAdmin = "admin";
 
+    /*
     private static final String email_txt_u = "user@gmail.com";
     private static final String pass_txt_u = "user";*/
 
@@ -64,10 +65,14 @@ public class MainActivity extends AppCompatActivity {
                     String email = EmailEditText.getText().toString();
                     String pass = PassEditText.getText().toString();
                     if (email.isEmpty()){
-                        Toast.makeText(getApplicationContext(), "Заповніть будь ласка ім'я", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Заповніть будь ласка email", Toast.LENGTH_LONG).show();
                     }
                     else if (pass.isEmpty()){
                         Toast.makeText(getApplicationContext(), "Будь ласка введіть пароль", Toast.LENGTH_LONG).show();
+                    }
+                    else if (emailAdmin.equals(String.valueOf(EmailEditText.getText())) &&  passAdmin.equals(String.valueOf(PassEditText.getText()))){
+                            Intent intent = new Intent(".AdminPage");
+                            startActivity(intent);
                     } else {
                         UserAuthorizationDto loginDto = new UserAuthorizationDto();
                         loginDto.setEmail(email);
