@@ -16,8 +16,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.loginapp.Adapter.MessageAdapter;
+import com.example.loginapp.Fragments.APIService;
 import com.example.loginapp.Model_for_chat.Chat;
 import com.example.loginapp.Model_for_chat.User;
+import com.example.loginapp.Notifications.Client;
+import com.example.loginapp.Notifications.Notification;
+import com.example.loginapp.Notifications.MyResponse;
+import com.example.loginapp.Notifications.Sender;
+import com.example.loginapp.Notifications.Token;
 import com.example.loginapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,6 +31,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -32,6 +39,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MessageActivity extends AppCompatActivity {
 
@@ -53,6 +63,12 @@ public class MessageActivity extends AppCompatActivity {
 
     ValueEventListener seenListener;
 
+    APIService apiService;
+
+    String userId;
+
+    boolean notify = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +85,8 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -81,12 +99,13 @@ public class MessageActivity extends AppCompatActivity {
         textSend = findViewById(R.id.textSend);
 
         intent = getIntent();
-        final String userId = intent.getStringExtra("userId");
+        userId = intent.getStringExtra("userId");
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                notify = true;
                 String msg = textSend.getText().toString();
                 if (!msg.equals("")){
                     sendMessage(fuser.getUid(), userId, msg);
@@ -158,7 +177,6 @@ public class MessageActivity extends AppCompatActivity {
 
         reference.child("Chats").push().setValue(hashMap);
 
-        final String userId = intent.getStringExtra("userId");
         //add user to chat fragment
         final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("ChatList")
                 .child(fuser.getUid())
@@ -169,6 +187,65 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.exists()){
                     chatRef.child("id").setValue(userId);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final String msg = message;
+
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (notify){
+                    assert user != null;
+                    sendNotification(receiver, user.getUsername(), msg);
+                }
+                notify = false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void sendNotification(String receiver, final String username, final String message){
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        Query query = tokens.orderByKey().equalTo(receiver);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                    Token token = snapshot.getValue(Token.class);
+                    Notification notification = new Notification(fuser.getUid(), R.mipmap.ic_launcher, username+": "+message, "Нове повідомлення", userId);
+
+                    Sender sender = new Sender(notification, token.getToken());
+
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<MyResponse>() {
+                                @Override
+                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                    if (response.code() == 200){
+                                        if (response.body().success != 1){
+                                            Toast.makeText(MessageActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<MyResponse> call, Throwable t) {
+
+                                }
+                            });
                 }
             }
 
