@@ -65,7 +65,7 @@ public class ChatPage extends AppCompatActivity {
                 if (user.getImageURL().equals("default")){
                     profileImage.setImageResource(R.mipmap.ic_launcher);
                 } else {
-                    Glide.with(ChatPage.this).load(user.getImageURL()).into(profileImage);
+                    Glide.with(getApplicationContext()).load(user.getImageURL()).into(profileImage);
                 }
             }
 
