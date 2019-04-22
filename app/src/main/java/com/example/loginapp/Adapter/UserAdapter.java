@@ -122,8 +122,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Chat chat = snapshot.getValue(Chat.class);
-                    if (chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(userId) ||
-                            chat.getReceiver().equals(userId) && chat.getSender().equals(firebaseUser.getUid())){
+                    if (firebaseUser != null && (chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(userId) ||
+                            chat.getReceiver().equals(userId) && chat.getSender().equals(firebaseUser.getUid()))) {
                         theLastMessage = chat.getMessage();
                     }
                 }
@@ -133,9 +133,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                         lastMsg.setText("Немає повідомлень");
                         break;
 
-                        default:
-                            lastMsg.setText(theLastMessage);
-                            break;
+                    default:
+                        lastMsg.setText(theLastMessage);
+                        break;
                 }
 
                 theLastMessage = "default";

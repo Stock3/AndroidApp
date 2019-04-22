@@ -41,7 +41,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String email = sendEmail.getText().toString();
-                
+
                 if (email.equals("")){
                     Toast.makeText(ResetPasswordActivity.this, "Обов'язково заповніть всі поля", Toast.LENGTH_SHORT).show();
                 } else {

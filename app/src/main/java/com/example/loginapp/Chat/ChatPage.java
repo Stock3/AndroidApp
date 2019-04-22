@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.example.loginapp.Fragments.ChatsFragment;
 import com.example.loginapp.Fragments.ProfileFragment;
 import com.example.loginapp.Fragments.UsersFragment;
+import com.example.loginapp.Model_for_chat.Chat;
 import com.example.loginapp.Model_for_chat.User;
 import com.example.loginapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -75,18 +76,41 @@ public class ChatPage extends AppCompatActivity {
             }
         });
 
-        TabLayout tabLayout = findViewById(R.id.tabLayout);
-        ViewPager viewPager = findViewById(R.id.viewPager);
+        final TabLayout tabLayout = findViewById(R.id.tabLayout);
+        final ViewPager viewPager = findViewById(R.id.viewPager);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        reference = FirebaseDatabase.getInstance().getReference("Chats");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+                int unRead = 0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Chat chat = snapshot.getValue(Chat.class);
+                    if (chat.getReceiver().equals(firebaseUser.getUid()) && !chat.isIsseen()){
+                        unRead++;
+                    }
+                }
 
-        viewPagerAdapter.addFragment(new ChatsFragment(), "Чати");
-        viewPagerAdapter.addFragment(new UsersFragment(), "Контакти");
-        viewPagerAdapter.addFragment(new ProfileFragment(), "Профіль");
+                if (unRead == 0){
+                    viewPagerAdapter.addFragment(new ChatsFragment(), "Чати");
+                } else {
+                    viewPagerAdapter.addFragment(new ChatsFragment(), "("+unRead+")Чати");
+                }
 
-        viewPager.setAdapter(viewPagerAdapter);
+                viewPagerAdapter.addFragment(new UsersFragment(), "Контакти");
+                viewPagerAdapter.addFragment(new ProfileFragment(), "Профіль");
 
-        tabLayout.setupWithViewPager(viewPager);
+                viewPager.setAdapter(viewPagerAdapter);
+
+                tabLayout.setupWithViewPager(viewPager);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

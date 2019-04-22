@@ -54,7 +54,7 @@ public class UsersFragment extends Fragment {
         searchUsers.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                
+
             }
 
             @Override
@@ -81,20 +81,20 @@ public class UsersFragment extends Fragment {
         query.addValueEventListener (new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    mUsers.clear();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        User user = snapshot.getValue(User.class);
+                mUsers.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
 
-                        assert user != null;
-                        assert fuser != null;
-                        if (!user.getId().equals(fuser.getUid())) {
-                            mUsers.add(user);
-                        }
+                    assert user != null;
+                    assert fuser != null;
+                    if (!user.getId().equals(fuser.getUid())) {
+                        mUsers.add(user);
                     }
-
-                    userAdapter = new UserAdapter(getContext(), mUsers, false);
-                    recyclerView.setAdapter(userAdapter);
                 }
+
+                userAdapter = new UserAdapter(getContext(), mUsers, false);
+                recyclerView.setAdapter(userAdapter);
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
